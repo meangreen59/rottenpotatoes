@@ -7,7 +7,16 @@ class MoviesController < ApplicationController
   end
 
   def index
-    @movies = Movie.all
+    if (params[:sort_column] == "title")
+      @movies = Movie.order("title ASC").all
+      @sort_column = :title
+    elsif (params[:sort_column] == "release_date")
+      @movies = Movie.order("release_date ASC").all
+      @sort_column = :release_date
+    else  # params[:sort_column] == "default"
+      @movies = Movie.all
+      @sort_column = nil
+    end
   end
 
   def new
@@ -17,7 +26,7 @@ class MoviesController < ApplicationController
   def create
     @movie = Movie.create!(params[:movie])
     flash[:notice] = "#{@movie.title} was successfully created."
-    redirect_to movies_path
+    redirect_to movies_path(:sort_column => "default")
   end
 
   def edit
@@ -35,7 +44,7 @@ class MoviesController < ApplicationController
     @movie = Movie.find(params[:id])
     @movie.destroy
     flash[:notice] = "Movie '#{@movie.title}' deleted."
-    redirect_to movies_path
+    redirect_to movies_path(:sort_column => "default")
   end
 
 end
