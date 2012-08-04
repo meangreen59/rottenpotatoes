@@ -5,10 +5,7 @@
   Include: 
   - @all_ratings.each do |rating|
     = rating
-    - if @selected_keys.nil?
-      = check_box_tag "ratings[#{rating}]"
-    - else
-      = check_box_tag "ratings[#{rating}]", '1', if @selected_keys.include?(rating) then true else nil end
+    = check_box_tag "ratings[#{rating}]", '1', if @selected_keys.include?(rating) then true else nil end
   = submit_tag 'Refresh', :id => "ratings_submit"
 
 %table#movies

@@ -10,7 +10,7 @@ class MoviesController < ApplicationController
     @all_ratings = Movie.all_ratings
     @ratings = params[:ratings]
     if params[:ratings].nil?
-      @selected_keys = nil
+      @selected_keys = ['N/A']
     else
       @selected_keys = @ratings.keys
     end
